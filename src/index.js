@@ -1,10 +1,30 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import YTSearch from "youtube-api-search";
 
-const API_KEY = 'AIzaSyCWk-evPQkt0eiIqfR-4mmQmsbnaD7PLwk';
+import SearchBar from "./components/search_bar";
 
-const App = function() {
-  return <div>Hi, Rodrigo</div>;
-};
+const API_KEY = "AIzaSyCWk-evPQkt0eiIqfR-4mmQmsbnaD7PLwk";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = { videos: [] };
+
+    YTSearch({ key: API_KEY, term: "dota" }, videos => {
+      this.setState({ videos })
+    });
+  }
+
+  render() {
+    console.log(this.state.videos)
+    return (
+      <div>
+        <SearchBar />
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(<App />, document.getElementById("root"));
